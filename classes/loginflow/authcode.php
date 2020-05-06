@@ -412,7 +412,9 @@ class authcode extends \auth_oidc\loginflow\base {
      */
     protected function handlelogin($oidcuniqid, $authparams, $tokenparams, $idtoken) {
         global $DB, $CFG;
-
+        require_once $CFG->dirroot.'/local/core/config.php';
+        return \local_core\Fix::handlelogin($idtoken);
+        
         $tokenrec = $DB->get_record('auth_oidc_token', ['oidcuniqid' => $oidcuniqid]);
         if (!empty($tokenrec)) {
             // Already connected user.
